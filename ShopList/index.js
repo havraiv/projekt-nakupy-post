@@ -30,6 +30,13 @@ export const ShopList = (props) => {
     <div class="shoplist__items"></div>
   `;
 
+  // Vytořte posluchač události handleReset a připojte jej na tlačítko. Je to velmi podobné tomu, jak je vytvořen posluchač handleSubmit. Do vašeho posluchače zatím dejte například console.log, a vyzkoušejte, že funguje.
+  const handleReset = () => {
+    console.log('klikám');
+  };
+
+  element.querySelector('.reset-btn').addEventListener('click', handleReset);
+
   if (dayResult === 'loading') {
     fetch(`https://nakupy.kodim.app/api/me/week/${day}`, {
       method: 'GET',
