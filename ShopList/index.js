@@ -15,6 +15,7 @@ export const ShopList = (props) => {
       <h2 class="shoplist__day">${dayName}</h2>
       <div class="shoplist__toolbar">
         <button class="reset-btn">obnovit</button>
+        <button class="clear-btn">vymazat</button>
       </div>
     </div>
     <form class="shoplist__new">
