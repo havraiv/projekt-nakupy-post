@@ -32,7 +32,18 @@ export const ShopList = (props) => {
   `;
 
   const handleClear = () => {
-    console.log('klikám');
+    fetch(`https://nakupy.kodim.app/api/me/week/${day}/actions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ type: 'clear' }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        element.replaceWith(ShopList({ day, dayResult: data.result }));
+      });
   };
 
   element.querySelector('.clear-btn').addEventListener('click', handleClear);
