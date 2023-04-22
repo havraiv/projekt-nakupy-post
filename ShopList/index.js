@@ -13,6 +13,9 @@ export const ShopList = (props) => {
   element.innerHTML = `
     <div class="shoplist__head">
       <h2 class="shoplist__day">${dayName}</h2>
+      <div class="shoplist__toolbar">
+        <button class="reset-btn">obnovit</button>
+      </div>
     </div>
     <form class="shoplist__new">
       <div class="form-fields">  
@@ -26,7 +29,7 @@ export const ShopList = (props) => {
     </form>
     <div class="shoplist__items"></div>
   `;
-  
+
   if (dayResult === 'loading') {
     fetch(`https://nakupy.kodim.app/api/me/week/${day}`, {
       method: 'GET',
@@ -34,13 +37,14 @@ export const ShopList = (props) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-    }).then((response) => response.json())
+    })
+      .then((response) => response.json())
       .then((data) => {
         element.replaceWith(
           ShopList({
             day: day,
             dayResult: data.result,
-          })
+          }),
         );
       });
 
@@ -49,7 +53,7 @@ export const ShopList = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     const productInput = element.querySelector('.product-input');
     const amountInput = element.querySelector('.amount-input');
     const unitInput = element.querySelector('.unit-input');
@@ -68,11 +72,13 @@ export const ShopList = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        element.replaceWith(ShopList({ day, dayResult: data.result }))
+        element.replaceWith(ShopList({ day, dayResult: data.result }));
       });
   };
 
-  element.querySelector('.shoplist__new').addEventListener('submit', handleSubmit);
+  element
+    .querySelector('.shoplist__new')
+    .addEventListener('submit', handleSubmit);
 
   const itemsElement = element.querySelector('.shoplist__items');
   itemsElement.append(...dayResult.items.map((item) => ListItem(item)));
