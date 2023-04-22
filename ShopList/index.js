@@ -31,6 +31,11 @@ export const ShopList = (props) => {
     <div class="shoplist__items"></div>
   `;
 
+  const handleClear = () => {
+    console.log('klikám');
+  };
+
+  element.querySelector('.clear-btn').addEventListener('click', handleClear);
   const handleReset = () => {
     fetch(`https://nakupy.kodim.app/api/me/week/${day}/actions`, {
       method: 'POST',
